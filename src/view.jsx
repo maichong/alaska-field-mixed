@@ -78,7 +78,16 @@ export default class MixedFieldView extends React.Component {
   }
 
   render() {
-    let field = this.props.field;
+    let { field, disabled } = this.props;
+    if (disabled) {
+
+      return <div className="form-group">
+        <label className="control-label col-xs-2">{field.label}</label>
+        <div className="col-xs-10">
+          <pre>{this.state.text}</pre>
+        </div>
+      </div>
+    }
     return (
       <Input
         ref="input"
