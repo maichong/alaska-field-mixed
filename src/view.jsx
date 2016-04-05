@@ -72,10 +72,10 @@ export default class MixedFieldView extends React.Component {
       }
     }
     this.setState(state);
-    if (json && this.props.onChange) {
+    if (json !== undefined && this.props.onChange) {
       this.props.onChange(json);
     }
-  }
+  };
 
   render() {
     let { field, disabled } = this.props;
