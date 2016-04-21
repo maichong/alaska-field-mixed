@@ -6,12 +6,17 @@
 
 import React from 'react';
 import { shallowEqual } from 'alaska-admin-view';
-import { Input } from 'react-bootstrap';
 
 export default class MixedFieldView extends React.Component {
 
   static propTypes = {
-    children: React.PropTypes.node
+    model: React.PropTypes.object,
+    field: React.PropTypes.object,
+    data: React.PropTypes.object,
+    errorText: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
+    value: React.PropTypes.any,
+    onChange: React.PropTypes.func,
   };
 
   constructor(props) {
@@ -48,7 +53,7 @@ export default class MixedFieldView extends React.Component {
         json = eval('json=' + value);
         state.style = undefined;
       } catch (err) {
-        state.style = 'error';
+        state.style = 'has-error';
       }
     }
     this.setState(state);
@@ -68,7 +73,7 @@ export default class MixedFieldView extends React.Component {
         json = eval('json=' + value);
         state.style = undefined;
       } catch (err) {
-        state.style = 'error';
+        state.style = 'has-error';
       }
     }
     this.setState(state);
@@ -79,27 +84,45 @@ export default class MixedFieldView extends React.Component {
 
   render() {
     let { field, disabled } = this.props;
-    if (disabled) {
 
-      return <div className="form-group">
-        <label className="control-label col-xs-2">{field.label}</label>
-        <div className="col-xs-10">
-          <pre>{this.state.text}</pre>
-        </div>
-      </div>
-    }
-    return (
-      <Input
-        ref="input"
-        type="textarea"
-        label={field.label}
-        value={this.state.text}
-        bsStyle={this.state.style}
+    let inputElement;
+    if (disabled || field.static) {
+      inputElement = <pre>{this.state.text}</pre>;
+    } else {
+      inputElement = <textarea
+        className="form-control"
         onChange={this.handleChange}
         onBlur={this.handleBlur}
-        labelClassName="col-xs-2"
-        wrapperClassName="col-xs-10"
-      />
+      >{this.state.text}</textarea>;
+    }
+
+    let className = 'form-group ' + this.state.style;
+
+    let helpElement = field.help ? <p className="help-block">{field.help}</p> : null;
+
+    let label = field.nolabel ? '' : field.label;
+
+    if (field.fullWidth) {
+      let labelElement = label ? (
+        <label className="control-label">{label}</label>
+      ) : null;
+      return (
+        <div className={className}>
+          {labelElement}
+          {inputElement}
+          {helpElement}
+        </div>
+      );
+    }
+
+    return (
+      <div className={className}>
+        <label className="col-sm-2 control-label">{label}</label>
+        <div className="col-sm-10">
+          {inputElement}
+          {helpElement}
+        </div>
+      </div>
     );
   }
 }
