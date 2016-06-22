@@ -93,7 +93,8 @@ export default class MixedFieldView extends React.Component {
         className="form-control"
         onChange={this.handleChange}
         onBlur={this.handleBlur}
-      >{this.state.text}</textarea>;
+        value={this.state.text}
+      />;
     }
 
     let className = 'form-group ' + this.state.style;
