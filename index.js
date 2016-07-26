@@ -15,11 +15,11 @@ class MixedField extends alaska.Field {
 MixedField.views = {
   cell: {
     name: 'MixedFieldCell',
-    field: __dirname + '/lib/cell.js'
+    path: __dirname + '/lib/cell.js'
   },
   view: {
     name: 'MixedFieldView',
-    field: __dirname + '/lib/view.js'
+    path: __dirname + '/lib/view.js'
   }
 };
 
