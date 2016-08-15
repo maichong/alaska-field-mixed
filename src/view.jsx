@@ -7,16 +7,18 @@
 import React from 'react';
 import { shallowEqual } from 'alaska-admin-view';
 
+const { bool, object, any, func, string } = React.PropTypes;
+
 export default class MixedFieldView extends React.Component {
 
   static propTypes = {
-    model: React.PropTypes.object,
-    field: React.PropTypes.object,
-    data: React.PropTypes.object,
-    errorText: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    value: React.PropTypes.any,
-    onChange: React.PropTypes.func,
+    model: object,
+    field: object,
+    data: object,
+    errorText: string,
+    disabled: bool,
+    value: any,
+    onChange: func,
   };
 
   constructor(props) {
@@ -97,7 +99,7 @@ export default class MixedFieldView extends React.Component {
       />;
     }
 
-    let className = 'form-group ' + this.state.style;
+    let className = 'form-group mixed-field ' + this.state.style;
 
     let helpElement = field.help ? <p className="help-block">{field.help}</p> : null;
 
